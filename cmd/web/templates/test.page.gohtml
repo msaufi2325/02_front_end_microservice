@@ -46,21 +46,25 @@
 				action: "log",
 				log: {
 					name: "event",
-					data: "Some kind of data"
+					data: "Some kind of data",
 				}
 			}
 
 			const headers = new Headers();
 			headers.append("Content-Type", "application/json");
 
-			const body = {
+			{{/* const body = {
 				method: "POST",
 				headers: headers,
-				body: JSON.stringify(payload)
-			};
+				body: JSON.stringify(payload),
+			}; */}}
 
 			try {
-				const response = await fetch("http://localhost:8080/handle", body);
+				const response = await fetch("http://localhost:8080/handle", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(payload),
+          });
 				const data = await response.json();
 
 				sent.textContent = JSON.stringify(payload, undefined, 4);
@@ -99,7 +103,7 @@
             action: "auth",
             auth: {
                 email: "admin@example.com",
-                password: "verysecret"
+                password: "verysecret",
             }
         };
 
@@ -109,7 +113,7 @@
         const requestOptions = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
         };
 
         try {
