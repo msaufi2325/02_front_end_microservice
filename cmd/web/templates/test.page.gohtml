@@ -10,7 +10,6 @@
                 <a id="authBrokerBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Auth</a>
                 <a id="logBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Log</a>
                 <a id="mailBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Mail</a>
-                <a id="mailBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Mail</a>
 
                 <div id="output" class="mt-5" style="outline: 1px solid silver; padding: 2em;">
                     <span class="text-muted">Output shows here...</span>
@@ -53,6 +52,29 @@
           subject: "Test mail",
           message: "This is a test mail",
         },
+      }
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      try {
+        const response = await fetch("http://localhost:8080/handle", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+
+        sent.textContent = JSON.stringify(payload, undefined, 4);
+        received.textContent = JSON.stringify(data, undefined, 4);
+
+        if (data.error) {
+          console.log(data.message);
+        } else {
+          output.innerHTML += `<br><strong>Response from mail service</strong>: ${data.message}`;
+        }
+      } catch (error) {
+        output.innerHTML += "<br><br>Error: " + error;
       }
     })
 
