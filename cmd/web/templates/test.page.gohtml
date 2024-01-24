@@ -44,7 +44,15 @@
     let mailBtn = document.getElementById("mailBtn");
 
     mailBtn.addEventListener("click", async function() {
-      
+      const payload = {
+        action: "mail",
+        mail: {
+          from: "me@example.com",
+          to: "you@there.com",
+          subject: "Test mail",
+          message: "This is a test mail",
+        },
+      }
     })
 
     logBtn.addEventListener("click", async function() {
